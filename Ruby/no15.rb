@@ -13,16 +13,11 @@
 
 # Remember that there are 21x21 intersections in a 20x20 grid
 
-grid = Array.new(21, nil)
+grid = Array.new(21, Array.new(21, 1))
 
-0.upto(20) do |row|
-  grid[row] = Array.new(21, 0)
-  0.upto(20).each do |col|
-    if col == 0 or row == 0
-      grid[row][col] = 1
-    else
-      grid[row][col] = grid[row-1][col] + grid[row][col-1]
-    end
+1.upto(20) do |row|
+  1.upto(20).each do |col|
+    grid[row][col] = grid[row-1][col] + grid[row][col-1]
   end
 end
 
