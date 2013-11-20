@@ -1,4 +1,5 @@
 module Toolbox where
+  import Data.List
   --Better prime list
   --http://en.literateprograms.org/Sieve_of_Eratosthenes_(Haskell)
 
@@ -27,3 +28,12 @@ module Toolbox where
         where
           f (x:xt) ys = x : (merge xt ys)
           g p         = [n*p | n <- [p, p + 2 ..]]
+
+  primeFactors n = primeFactors' n 2
+    where
+      primeFactors' n f
+        | f*f > n        = [n]
+        | n `mod` f == 0 = f : primeFactors' (n `div` f) f
+        | otherwise      = primeFactors' n (f + 1)
+
+  factorCount n = product $ map (+1) $ map length $ group $ primeFactors n
