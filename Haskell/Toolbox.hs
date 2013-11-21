@@ -29,6 +29,7 @@ module Toolbox where
           f (x:xt) ys = x : (merge xt ys)
           g p         = [n*p | n <- [p, p + 2 ..]]
 
+  primeFactors :: Int -> [Int]
   primeFactors n = primeFactors' n 2
     where
       primeFactors' n f
@@ -36,4 +37,17 @@ module Toolbox where
         | n `mod` f == 0 = f : primeFactors' (n `div` f) f
         | otherwise      = primeFactors' n (f + 1)
 
+  factorCount :: Int -> Int
   factorCount n = product $ map (+1) $ map length $ group $ primeFactors n
+
+  fac :: Integer -> Integer
+  fac n = fac' n 1
+    where
+      fac' 1 x = x
+      fac' n x = fac' (n-1) (x*n)
+
+  sumOfDigits :: Integer -> Integer
+  sumOfDigits n = sum $ digits n
+    where
+      digits 0 = []
+      digits x = digits (x `div` 10) ++ [x `mod` 10]
