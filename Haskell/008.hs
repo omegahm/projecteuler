@@ -11,7 +11,7 @@ no008 = no008' num 0
          | otherwise  = no008' (n `div` 10) (maximum [x, productOfDigits $ n `mod` 100000])
 
     productOfDigits :: Integer -> Integer
-    productOfDigits n = foldl (*) 1 $ digits n
+    productOfDigits n = product $ digits n
       where
         digits 0 = []
         digits x = digits (x `div` 10) ++ [x `mod` 10]
