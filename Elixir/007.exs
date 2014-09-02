@@ -1,14 +1,16 @@
 defmodule Math do
-  def primes do
-    Stream.unfold([2], fn primes ->
-      next = nextPrime(primes)
-      { next, [next | primes] }
-    end)
+  def findPrime(stop) do
+    findPrime(2, stop, %{ 1 => 2, 2 => 3 })
   end
 
-  defp nextPrime(primes) do
-    start = hd(primes)
-    Stream.iterate(start, &(&1+1))
+  defp findPrime(stop, stop, map), do: map[stop-1]
+  defp findPrime(   n, stop, map) do
+    next = nextPrime(map[n], Map.values(map))
+    findPrime(n+1, stop, Map.put(map, n+1, next))
+  end
+
+  defp nextPrime(n, primes) do
+    Stream.iterate(n, &(&1 + 2))
       |> Stream.drop_while(&(notPrime(&1, primes)))
       |> Enum.fetch!(0)
   end
@@ -18,4 +20,4 @@ defmodule Math do
   end
 end
 
-IO.puts Math.primes |> Enum.take(10000) |> Enum.fetch!(-1)
+IO.puts Math.findPrime(10001)
